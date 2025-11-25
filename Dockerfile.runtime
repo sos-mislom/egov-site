@@ -1,0 +1,18 @@
+FROM node:20-alpine
+
+WORKDIR /app
+ENV NODE_ENV=production
+
+RUN apk add --no-cache curl
+
+COPY --from=lab-4-build:latest /app/.next ./.next
+COPY --from=lab-4-build:latest /app/public ./public
+COPY --from=lab-4-build:latest /app/package*.json ./
+
+RUN npm install --omit=dev && npm cache clean --force
+
+RUN addgroup -S app && adduser -S www-data -G www-data
+USER www-data
+
+EXPOSE 3000
+CMD ["npm", "start"]

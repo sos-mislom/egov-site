@@ -1,0 +1,35 @@
+services:
+  system:
+    build:
+      context: .
+      dockerfile: Dockerfile.system
+    image: lab-4-system:latest
+
+  build:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    image: lab-4-build:latest
+    depends_on:
+      - system
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.runtime
+    image: lab-4-app:latest
+    depends_on:
+      - build
+    ports:
+      - "3001:3000"
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/ || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
