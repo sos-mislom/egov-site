@@ -1,13 +1,11 @@
-FROM node:20-alpine3.22
+FROM lab-4-system:latest AS system
 
 WORKDIR /app
 ENV NODE_ENV=production
 
-RUN apk add --no-cache curl
-
-COPY --from=lab-4-build:latest /app/.next ./.next
-COPY --from=lab-4-build:latest /app/public ./public
-COPY --from=lab-4-build:latest /app/package*.json ./
+COPY --from=lab-4-build:latest /app/.next /app/.next \
+                 /app/public /app/public \
+                 /app/package*.json /app/
 
 RUN npm install --omit=dev && npm cache clean --force
 
@@ -15,4 +13,20 @@ RUN addgroup -S app && adduser -S www-data -G www-data
 USER www-data
 
 EXPOSE 3000
+
 CMD ["npm", "start"]
+
+
+# После вынесения курла и заменой нода на импорт нода стало так
+
+# Было  
+# lab-4-build       latest      8e6d0cc3227b   795MB
+# lab-4-app         latest      b4e116aa6669   565MB 
+# lab-4-system      latest      e99f60cb0177   134MB
+
+# Стало
+# lab-4-build       latest      8796743bf550   800MB - из-за курла вырос, полагаю
+# lab-4-app         latest      3a5556bdd5c7   408MB - уменьшилось
+# lab-4-system      latest      f4e45f99b249   140MB - ожидаемо вырос
+
+# Сравнивая с третьей лабой видно что app+system ~ 550МБ там так и весит  
