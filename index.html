@@ -98,15 +98,24 @@
 
     <section id="demo" class="py-24">
       <h2 class="text-4xl font-bold mb-10 text-center">Как работает бот</h2>
-      <div class="bg-gray-50 border rounded-3xl p-10 shadow-lg mb-16 grid md:grid-cols-2 gap-10 items-center">
-        <div class="space-y-4">
-          <div class="p-4 bg-white rounded-xl shadow border"><code class="text-blue-600 font-mono text-lg">/today</code><p class="text-gray-700 mt-1">Домашка на сегодня</p></div>
-          <div class="p-4 bg-white rounded-xl shadow border"><code class="text-blue-600 font-mono text-lg">/notes</code><p class="text-gray-700 mt-1">Все оценки и изменения</p></div>
-          <div class="p-4 bg-white rounded-xl shadow border"><code class="text-blue-600 font-mono text-lg">/schedule</code><p class="text-gray-700 mt-1">Расписание на сегодня и завтра</p></div>
+      <div class="bg-gray-50 border rounded-3xl p-10 shadow-lg mb-16 grid md:grid-cols-2 gap-10 items-start">
+        <div class="space-y-3">
+          <button class="command-item w-full text-left p-4 bg-white rounded-xl shadow border hover:border-blue-500 transition" data-video-src="how-it-works.mp4" data-poster="logo.jpg">
+            <code class="text-blue-600 font-mono text-lg">/today</code>
+            <p class="text-gray-700 mt-1">Домашка на сегодня</p>
+          </button>
+          <button class="command-item w-full text-left p-4 bg-white rounded-xl shadow border hover:border-blue-500 transition" data-video-src="video-notes.mp4" data-poster="logo.jpg">
+            <code class="text-blue-600 font-mono text-lg">/notes</code>
+            <p class="text-gray-700 mt-1">Все оценки и изменения</p>
+          </button>
+          <button class="command-item w-full text-left p-4 bg-white rounded-xl shadow border hover:border-blue-500 transition" data-video-src="video-schedule.mp4" data-poster="logo.jpg">
+            <code class="text-blue-600 font-mono text-lg">/schedule</code>
+            <p class="text-gray-700 mt-1">Расписание на сегодня и завтра</p>
+          </button>
         </div>
         <div>
           <div class="aspect-video overflow-hidden rounded-2xl border bg-slate-900 shadow-xl">
-            <video class="w-full h-full object-cover pointer-events-none" src="how-it-works.mp4" poster="logo.jpg" autoplay loop muted playsinline></video>
+            <video id="demoVideo" class="w-full h-full object-cover" src="how-it-works.mp4" poster="logo.jpg" autoplay loop muted playsinline controls preload="metadata"></video>
           </div>
         </div>
       </div>
@@ -206,30 +215,6 @@
         <a href="https://github.com/sos-mislom/egov66-extention" class="px-7 py-4 bg-gray-700 text-white rounded-xl shadow hover:bg-gray-800 text-lg">GitHub расширения</a>
       </div>
 
-      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="p-6 rounded-2xl border bg-white shadow-sm">
-          <div class="flex items-center gap-3 mb-3">
-            <div class="h-12 w-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700 font-bold">A</div>
-            <div>
-              <p class="font-semibold text-lg">Extension tutorial v1</p>
-              <p class="text-sm text-gray-600">Chromium / Edge</p>
-            </div>
-          </div>
-          <p class="text-gray-700 mb-4">Откройте chrome://extensions → загрузить распакованное → укажите папку из архива.</p>
-          <a href="extention-tutorial-chrome.mp4" class="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 shadow">Скачать архив</a>
-        </div>
-        <div class="p-6 rounded-2xl border bg-white shadow-sm">
-          <div class="flex items-center gap-3 mb-3">
-            <div class="h-12 w-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 font-bold">B</div>
-            <div>
-              <p class="font-semibold text-lg">Extension tutorial v2</p>
-              <p class="text-sm text-gray-600">Yandex / Firefox</p>
-            </div>
-          </div>
-          <p class="text-gray-700 mb-4">Зайдите в страницу дополнений → включите режим разработчика → загрузите папку с manifest.json.</p>
-          <a href="extention-tutorial-firefox.mp4" class="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 shadow">Скачать версию B</a>
-        </div>
-      </div>
     </section>
   </main>
 
@@ -292,6 +277,24 @@
         step.addEventListener('click', () => {
           step.classList.toggle('line-through');
           step.classList.toggle('opacity-60');
+        });
+      });
+
+      const demoVideo = document.getElementById('demoVideo');
+      const commandItems = document.querySelectorAll('.command-item');
+      commandItems.forEach((item) => {
+        item.addEventListener('click', () => {
+          commandItems.forEach((btn) => btn.classList.remove('border-blue-500', 'bg-blue-50'));
+          item.classList.add('border-blue-500', 'bg-blue-50');
+          const src = item.getAttribute('data-video-src');
+          const poster = item.getAttribute('data-poster');
+          if (demoVideo && src) {
+            demoVideo.src = src;
+            if (poster) demoVideo.poster = poster;
+            demoVideo.currentTime = 0;
+            const play = demoVideo.play();
+            if (play && typeof play.catch === 'function') play.catch(() => {});
+          }
         });
       });
     });
