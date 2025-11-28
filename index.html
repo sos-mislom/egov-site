@@ -98,36 +98,100 @@
 
     <section id="demo" class="py-24">
       <h2 class="text-4xl font-bold mb-10 text-center">Как работает бот</h2>
-      <div class="bg-gray-50 border rounded-3xl p-10 shadow-lg mb-16 grid gap-8 items-start md:grid-cols-[1fr_auto]">
-        <div class="space-y-3 md:pr-6">
-          <button class="command-item w-full text-left p-4 bg-white rounded-xl shadow border hover:border-blue-500 transition" data-video-src="today.mp4" data-poster="logo.jpg">
-            <code class="text-blue-600 font-mono text-lg">/today</code>
-            <p class="text-gray-700 mt-1">Домашка на сегодня</p>
-          </button>
-          <button class="command-item w-full text-left p-4 bg-white rounded-xl shadow border hover:border-blue-500 transition" data-video-src="notes.mp4" data-poster="logo.jpg">
-            <code class="text-blue-600 font-mono text-lg">/notes</code>
-            <p class="text-gray-700 mt-1">Все оценки и изменения</p>
-          </button>
-          <button class="command-item w-full text-left p-4 bg-white rounded-xl shadow border hover:border-blue-500 transition" data-video-src="shedule.mp4" data-poster="logo.jpg">
-            <code class="text-blue-600 font-mono text-lg">/schedule</code>
-            <p class="text-gray-700 mt-1">Расписание на сегодня и завтра</p>
-          </button>
-        </div>
-        <div class="flex justify-center md:justify-start">
-          <div class="demo-area relative w-full max-w-[360px] rounded-[28px] border bg-slate-900 shadow-2xl overflow-hidden pb-[150%]">
-            <div class="absolute inset-0 pointer-events-none border-[6px] border-black/15 rounded-[28px]"></div>
-            <video id="demoVideo" class="absolute inset-0 w-full h-full object-cover" src="how-it-works.mp4" poster="logo.jpg" autoplay loop muted playsinline controls preload="metadata"></video>
+
+      <!-- Карточка с вертикальным "телефоном" + команды -->
+      <div class="bg-gray-50 border rounded-3xl p-10 shadow-lg mb-16 grid gap-10 items-center lg:grid-cols-[360px,minmax(0,1fr)]">
+        <!-- Вертикальный плеер (макап телефона) -->
+        <div class="flex justify-center lg:justify-start">
+          <div class="demo-area relative w-full max-w-[360px] rounded-[32px] border bg-slate-900 shadow-2xl overflow-hidden">
+            <!-- рамка телефона -->
+            <div class="absolute inset-0 pointer-events-none border-[6px] border-black/15 rounded-[32px]"></div>
+
+            <!-- внутренняя область c вертикальным видео -->
+            <div class="relative w-full pb-[185%]"> <!-- делает его высоким, как телефон -->
+              <video
+                id="demoVideo"
+                class="absolute inset-0 w-full h-full object-cover"
+                src="how-it-works.mp4"
+                poster="logo.jpg"
+                autoplay
+                loop
+                muted
+                playsinline
+                controls
+                preload="metadata"
+              ></video>
+
+              <!-- подпись поверх видео внизу -->
+              <div class="pointer-events-none absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/70 via-black/30 to-transparent text-white">
+                <p class="text-xs uppercase tracking-[0.2em] opacity-80 mb-1">Демо-бота</p>
+                <p class="text-sm font-semibold">Нажмите на любую команду справа, чтобы увидеть, как она работает</p>
+              </div>
+            </div>
           </div>
+        </div>
+
+        <!-- Команды /today /notes /schedule -->
+        <div class="space-y-5">
+          <p class="text-gray-600 text-base">
+            Выберите команду — плеер покажет короткое вертикальное видео с реальным сценарием использования.
+          </p>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <button
+              class="command-item w-full text-left p-4 bg-white rounded-xl shadow border hover:border-blue-500 hover:bg-blue-50 transition"
+              data-video-src="today.mp4"
+              data-poster="logo.jpg"
+            >
+              <code class="text-blue-600 font-mono text-lg">/today</code>
+              <p class="text-gray-700 mt-1 text-sm">Домашка на сегодня</p>
+            </button>
+
+            <button
+              class="command-item w-full text-left p-4 bg-white rounded-xl shadow border hover:border-blue-500 hover:bg-blue-50 transition"
+              data-video-src="notes.mp4"
+              data-poster="logo.jpg"
+            >
+              <code class="text-blue-600 font-mono text-lg">/notes</code>
+              <p class="text-gray-700 mt-1 text-sm">Все оценки и изменения</p>
+            </button>
+
+            <button
+              class="command-item w-full text-left p-4 bg-white rounded-xl shadow border hover:border-blue-500 hover:bg-blue-50 transition sm:col-span-2"
+              data-video-src="shedule.mp4"
+              data-poster="logo.jpg"
+            >
+              <code class="text-blue-600 font-mono text-lg">/schedule</code>
+              <p class="text-gray-700 mt-1 text-sm">Расписание на сегодня и завтра</p>
+            </button>
+          </div>
+
+          <p class="text-xs text-gray-500">
+            * На десктопе блок собран под вертикальный формат видео, как в телефоне.
+          </p>
         </div>
       </div>
 
+      <!-- Дальше твой блок с отзывами, я его не трогал -->
       <h3 class="text-3xl font-bold mb-6 text-center">Что говорят пользователи</h3>
       <div class="overflow-x-auto pb-4">
         <div class="flex gap-6 min-w-max">
-          <div class="p-6 bg-white rounded-2xl shadow border w-80 shrink-0"><p class="text-gray-800 italic mb-3">“Бот помогает быстро смотреть домашку, захожу каждый день.”</p><p class="font-semibold text-gray-700">Егор, 14 лет — ученик, МАОУ Гимназия 39</p></div>
-          <div class="p-6 bg-white rounded-2xl shadow border w-80 shrink-0"><p class="text-gray-800 italic mb-3">“Удобно следить за оценками ребёнка, всё приходит сразу.”</p><p class="font-semibold text-gray-700">Ирина, 37 лет — родитель</p></div>
-          <div class="p-6 bg-white rounded-2xl shadow border w-80 shrink-0"><p class="text-gray-800 italic mb-3">“Работает моментально, ничего лишнего.”</p><p class="font-semibold text-gray-700">Миша, 14 лет — МАОУ Лицей 100</p></div>
-          <div class="p-6 bg-white rounded-2xl shadow border w-80 shrink-0"><p class="text-gray-800 italic mb-3">“Для двух детей идеально — всё видно сразу.”</p><p class="font-semibold text-gray-700">Екатерина, 37 лет — родитель</p></div>
+          <div class="p-6 bg-white rounded-2xl shadow border w-80 shrink-0">
+            <p class="text-gray-800 italic mb-3">“Бот помогает быстро смотреть домашку, захожу каждый день.”</p>
+            <p class="font-semibold text-gray-700">Егор, 14 лет — ученик, МАОУ Гимназия 39</p>
+          </div>
+          <div class="p-6 bg-white rounded-2xl shadow border w-80 shrink-0">
+            <p class="text-gray-800 italic mb-3">“Удобно следить за оценками ребёнка, всё приходит сразу.”</p>
+            <p class="font-semibold text-gray-700">Ирина, 37 лет — родитель</p>
+          </div>
+          <div class="p-6 bg-white rounded-2xl shadow border w-80 shrink-0">
+            <p class="text-gray-800 italic mb-3">“Работает моментально, ничего лишнего.”</p>
+            <p class="font-semibold text-gray-700">Миша, 14 лет — МАОУ Лицей 100</p>
+          </div>
+          <div class="p-6 bg-white rounded-2xl shadow border w-80 shrink-0">
+            <p class="text-gray-800 italic mb-3">“Для двух детей идеально — всё видно сразу.”</p>
+            <p class="font-semibold text-gray-700">Екатерина, 37 лет — родитель</p>
+          </div>
         </div>
       </div>
     </section>
